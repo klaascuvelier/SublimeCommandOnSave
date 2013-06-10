@@ -5,18 +5,15 @@ import subprocess
 
 class CommandOnSave(sublime_plugin.EventListener):
     def on_post_save(self, view):
-        debug('post save!')
-        settings = view.settings()
-        folders = settings.get("commands")
-        current_file = view.file_name()
 
-        for entry in folders:
-            cmd_path, cmd = entry.split('::', 1)
+        settings = sublime.load_settings('CommandOnSave.sublime-settings')
+        commands = settings.get('commands')
+        file = view.file_name()
 
-            if current_file.startswith(cmd_path) and len(cmd) > 0:
-                subprocess.call([cmd], shell=True)
-
-
-def debug(message):
-    print('CommandOnSave: ' + message);
-    return
+        if not commands == None:
+            for entry in commands:
+                path, cmd = entry.split('::', 1)
+                if file.startswith(path) and len(cmd) > 0:
+                    p = subprocess.Popen([cmd], shell=True, stdout=subprocess.PIPE)
+                    out, err = p.communicate()
+                    print ("Command on Save:\n" + out.decode('utf-8'))
