@@ -12,9 +12,8 @@ class CommandOnSave(sublime_plugin.EventListener):
         if not settings == None:
             for path in settings.keys():
                 commands = settings.get(path)
-                # path, cmd = entry.split('::', 1)
                 if file.startswith(path) and len(commands) > 0:
-                    print("Command on Save:\n")
+                    print("Command on Save:")
                     for command in commands:
                         p = subprocess.Popen([command], shell=True, stdout=subprocess.PIPE)
                         out, err = p.communicate()
