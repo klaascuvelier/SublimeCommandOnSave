@@ -23,7 +23,12 @@ class CommandOnSave(sublime_plugin.EventListener):
                     if before_stat is None:
                         before_stat = os.stat(file)
 
-                    command.append(file)
+                    command = re.sub(
+                        r"\b_file_\b",
+                        file,
+                        command
+                    )
+                    
                     process = subprocess.Popen(command,
                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                     output = process.stdout.read()
