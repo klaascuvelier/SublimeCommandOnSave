@@ -30,7 +30,7 @@ class CommandOnSave(sublime_plugin.EventListener):
                     )
                     
                     process = subprocess.Popen(command,
-                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
                     output = process.stdout.read()
                     code = process.wait()
                     if code != 0:
