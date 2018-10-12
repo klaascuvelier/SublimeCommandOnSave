@@ -2,7 +2,7 @@ import os
 import sublime
 import sublime_plugin
 import subprocess
-
+import re
 
 _STATUS_KEY = 'CommandOnSave'
 
